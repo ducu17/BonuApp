@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1976D2, #42A5F5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #125aa0;
+}
+
+.registro-texto {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.link-registro {
+    color: #1976D2;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.link-registro:hover {
+    text-decoration: underline;
+}
+/* --- Nuevos estilos para el formulario optimizado --- */
+.form-footer {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.login-link {
+    color: #1976D2;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Oculta las etiquetas label para mantener tu diseño limpio */
+.form-group label {
+    display: none;
+}
+/* Estilo para el mensaje de error de contraseñas */
+.error-texto {
+    color: #D32F2F; /* Rojo de advertencia */
+    font-size: 14px;
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}

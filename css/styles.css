@@ -1,0 +1,127 @@
+:root{
+  --blue:#003366;
+  --orange:#FFA500;
+  --white:#ffffff;
+  --gray:#F2F4F7;
+  --text:#1f2933;
+  --radius:12px;
+  --maxw:420px;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--gray), #ffffff);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.page{ width:100%; max-width:var(--maxw) }
+
+.card{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.title{
+  margin:0 0 6px 0;
+  color:var(--blue);
+  font-size:20px;
+  font-weight:700;
+}
+
+.subtitle{
+  margin:0 0 18px 0;
+  color:#4b5563;
+  font-size:14px;
+}
+
+.label{
+  display:block;
+  margin-top:12px;
+  margin-bottom:6px;
+  font-size:13px;
+  color:#374151;
+}
+
+.input{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  font-size:15px;
+  background:#fff;
+}
+
+.btn-primary{
+  margin-top:18px;
+  width:100%;
+  padding:12px;
+  background:var(--orange);
+  color:var(--white);
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+
+.btn-primary:focus{ outline:3px solid rgba(255,165,0,0.18) }
+.btn-primary:hover{ transform:translateY(-2px) }
+
+.links{ margin-top:12px; text-align:right; }
+.link{ color:var(--blue); font-size:13px; text-decoration:none }
+.link:hover{text-decoration:underline}
+
+.msg{ margin-top:14px; font-size:14px }
+.msg.error{ color:#b91c1c }
+.msg.success{ color:#065f46 }
+
+/* responsive */
+@media(min-width:720px){
+  body{ padding:40px }
+  .card{ padding:36px; }
+}
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".SplashActivity"
+android:background="#FFFFFF">
+
+<ImageView
+    android:id="@+id/logo"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:src="@drawable/logo_bonuapp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+<TextView
+    android:id="@+id/titulo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="BonuApp"
+    android:textSize="28sp"
+    android:textStyle="bold"
+    android:textColor="#2E7D32"
+    app:layout_constraintTop_toBottomOf="@id/logo"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

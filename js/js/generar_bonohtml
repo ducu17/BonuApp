@@ -1,0 +1,2 @@
+<button onclick="generarBono()">Generar Bono</button>
+<p id="mensajeBono"></p>

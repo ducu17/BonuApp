@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>BonuApp - Generar Bono</title>
+    <link rel="stylesheet" href="css/estilos.css">
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #F5F5F5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 420px;
+            background: white;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 15px;
+            width: 140px;
+        }
+
+        h2 {
+            color: #212121;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1976D2;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #90CAF9;
+            border-radius: 8px;
+            background: #E3F2FD;
+            font-size: 15px;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #2196F3;
+            box-shadow: 0 0 4px rgba(33,150,243,0.4);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #1976D2;
+        }
+
+        .bono-box {
+            background: #E3F2FD;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #2196F3;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        a {
+            color: #1976D2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <img src="img/logoBonuApp.webp" class="logo">
+
+        <h2>Generar Bono</h2>
+
+        <form id="formBono">
+            <label>Selecciona la tienda:</label>
+            <select id="tienda" required>
+                <option value="">-- Seleccionar --</option>
+                <option value="Éxito">Éxito</option>
+                <option value="Ara">Ara</option>
+                <option value="D1">D1</option>
+                <option value="Adidas">Adidas</option>
+                <option value="Stop">Stop</option>
+            </select>
+
+            <label>Valor del Bono:</label>
+            <select id="valor" required>
+                <option value="">-- Seleccionar --</option>
+                <option value="5.000">5.000</option>
+                <option value="10.000">10.000</option>
+                <option value="20.000">20.000</option>
+                <option value="50.000">50.000</option>
+            </select>
+
+            <button type="button" onclick="generarBono()">Generar Bono</button>
+        </form>
+
+        <div class="bono-box" id="resultado">
+            <h3>Bono Generado</h3>
+            <p id="textoBono"></p>
+        </div>
+
+        <p style="margin-top:15px;">
+            <a href="index.html">Volver al Inicio</a>
+        </p>
+
+    </div>
+
+    <script>
+        function generarBono() {
+            const tienda = document.getElementById("tienda").value;
+            const valor = document.getElementById("valor").value;
+
+            if (tienda === "" || valor === "") {
+                alert("Por favor selecciona todos los campos");
+                return;
+            }
+
+            const codigo = "BONU-" + Math.floor(100000 + Math.random() * 900000);
+
+            document.getElementById("textoBono").innerHTML =
+                "Tienda: <b>" + tienda + "</b><br>" +
+                "Valor: <b>$" + valor + "</b><br>" +
+                "Código del bono: <b>" + codigo + "</b>";
+
+            document.getElementById("resultado").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
