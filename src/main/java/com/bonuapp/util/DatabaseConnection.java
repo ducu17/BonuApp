@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
     // Variables en camelCase y constantes en MAYÚSCULAS
-    private static final String URL = "jdbc:mysql://localhost:3006/bonuapp_db";
+    private static final String URL = "jdbc:mysql://localhost:3306/bonuapp";
     private static final String USER = "root";
     private static final String PASSWORD = "";
     private static Connection connection = null;

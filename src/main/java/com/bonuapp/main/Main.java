@@ -19,5 +19,15 @@ public class Main {
         for (Premio p : premios) {
             System.out.println(p.getIdPremio() + " - " + p.getNombre() + " (" + p.getPuntosRequeridos() + " pts)");
         }
+        // --- PRUEBA DEL NUEVO MÉTODO DE CANJE CON STOCK ---
+        System.out.println("\n--- Probando Canje de Premio con Control de Stock ---");
+
+        int idUsuarioSimulado = 1;
+        int idPremioSimulado = 1;
+
+        String resultadoCanje = dao.canjearPremio(idUsuarioSimulado, idPremioSimulado);
+
+        System.out.println("Resultado del canje: " + resultadoCanje);
+        System.out.println("-----------------------------------------------------");
     }
 }
