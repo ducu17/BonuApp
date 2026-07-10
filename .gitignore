@@ -1,9 +1,16 @@
+# === Carpeta de salida de compilación (Obligatorio para el SENA) ===
+/out/
+/target/
+build/
 
-# Ignorar configuraciones de IntelliJ
+# === Archivos de configuración de IntelliJ IDEA ===
 .idea/
 *.iml
-.DS_Store
+*.iws
+*.ipr
 
-# Ignorar la carpeta de compilación de Java
-out/
-bin/
+# === Archivos de sistema y temporales ===
+.DS_Store
+Thumbs.db
+*.log
+tmp/
