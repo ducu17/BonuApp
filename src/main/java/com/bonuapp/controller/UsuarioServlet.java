@@ -23,12 +23,17 @@ public class UsuarioServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // 2. Crear la entidad del modelo
-        Usuario nuevoUsuario = new Usuario(nombre, email, password);
+        // // 2. Crear la entidad del modelo (Usando constructor vacío + setters)
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setCorreo(email);
+        nuevoUsuario.setContrasena(password);
+        nuevoUsuario.setSaldoPuntos(0);       // Valor inicial por defecto
+        nuevoUsuario.setRol("cliente");       // Rol por defecto asignado
 
-        // 3. Invocar la persistencia mediante el DAO
+        // // 3. Invocar la persistencia mediante el DAO (Cambiado a insertarUsuario)
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        boolean guardado = usuarioDAO.registrarUsuario(nuevoUsuario);
+        boolean guardado = usuarioDAO.insertarUsuario(nuevoUsuario);
 
         // 4. Decidir la respuesta según el resultado (aquí el flujo web maneja los mensajes)
         if (guardado) {
