@@ -7,51 +7,78 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-// Esta anotación mapea el Servlet con la acción del formulario HTML
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+/**
+ * Servlet encargado de procesar peticiones JSON desde el Front-End (React)
+ */
 @WebServlet("/UsuarioServlet")
 public class UsuarioServlet extends HttpServlet {
 
-    // Usamos doPost porque el formulario envía los datos por el método POST
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Obtener los parámetros enviados desde el JSP
-        String nombre = request.getParameter("nombre");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        // 1. Configurar cabeceras CORS para permitir peticiones desde React
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
-        // // 2. Crear la entidad del modelo (Usando constructor vacío + setters)
+        // 2. Leer la cadena JSON enviada por React
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = request.getReader();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        String jsonBody = sb.toString(); // Cadena que contiene los datos del formulario
+
+        // 3. Extracción de datos del JSON recibido
+        // Nota: Extraemos los valores parseando la cadena enviada por React
+        String nombre = extraerValorJson(jsonBody, "nombre");
+        String email = extraerValorJson(jsonBody, "email");
+        String password = extraerValorJson(jsonBody, "password");
+
+        // 4. Instanciar la entidad Usuario con los datos recibidos
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombre(nombre);
         nuevoUsuario.setCorreo(email);
         nuevoUsuario.setContrasena(password);
-        nuevoUsuario.setSaldoPuntos(0);       // Valor inicial por defecto
-        nuevoUsuario.setRol("cliente");       // Rol por defecto asignado
+        nuevoUsuario.setSaldoPuntos(0);
+        nuevoUsuario.setRol("cliente");
 
-        // // 3. Invocar la persistencia mediante el DAO (Cambiado a insertarUsuario)
+        // 5. Guardar en la base de datos usando UsuarioDAO
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        boolean guardado = usuarioDAO.insertarUsuario(nuevoUsuario);
+        boolean guardado = usuarioDAO.guardar(nuevoUsuario);
 
-        // 4. Decidir la respuesta según el resultado (aquí el flujo web maneja los mensajes)
+        // 6. Responder a React en formato JSON
+        PrintWriter out = response.getWriter();
         if (guardado) {
-            // Guardamos un mensaje de éxito en el request
-            request.setAttribute("mensaje", "¡Registro exitoso para " + nombre + "! Ya puedes iniciar sesión.");
-            // Reenviamos el flujo de vuelta a la misma página o a una pantalla de bienvenida
-            request.getRequestDispatcher("registro.jsp").forward(request, response);
+            response.setStatus(HttpServletResponse.SC_CREATED);
+            out.print("{\"status\": \"ok\", \"mensaje\": \"Usuario registrado con exito\"}");
         } else {
-            request.setAttribute("mensaje", "Error crítico: No se pudo completar el registro. Intente de nuevo.");
-            request.getRequestDispatcher("registro.jsp").forward(request, response);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.print("{\"status\": \"error\", \"mensaje\": \"No se pudo guardar el usuario\"}");
         }
+        out.flush();
     }
 
-    // Opcional: El método doGet podría usarse si alguien entra directamente a la URL /UsuarioServlet
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Simplemente redirige al formulario de registro limpio
-        response.sendRedirect("registro.jsp");
+    // Método auxiliar para obtener el valor de una clave JSON
+    private String extraerValorJson(String json, String clave) {
+        try {
+            String patron = "\"" + clave + "\":\"";
+            int inicio = json.indexOf(patron);
+            if (inicio == -1) return "";
+            inicio += patron.length();
+            int fin = json.indexOf("\"", inicio);
+            return json.substring(inicio, fin);
+        } catch (Exception e) {
+            return "";
+        }
     }
 }
