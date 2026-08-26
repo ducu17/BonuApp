@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>BonuApp - Iniciar Sesión</title>
+    <link rel="stylesheet" href="../../../css/estilos.css">
+</head>
+
+<body>
+<div class="container">
+
+    <img src="../../../img/logoBonuApp.webp" width="150" class="logo" alt="Logo BonuApp">
+
+    <h2>Iniciar Sesión</h2>
+
+    <!-- Formulario configurado con ID para JavaScript -->
+    <form id="formLogin">
+        <div class="form-group">
+            <input type="email" id="correo" placeholder="Correo electrónico" required>
+        </div>
+        <div class="form-group">
+            <input type="password" id="password" placeholder="Contraseña" required>
+        </div>
+
+        <!-- Parrafo para mostrar los mensajes de respuesta del servidor -->
+        <p id="mensaje-error" class="error-texto"></p>
+
+        <button type="submit">Ingresar</button>
+    </form>
+
+    <p class="form-footer">
+        ¿No tienes cuenta?
+        <a href="registro.html" class="login-link">Registrarse</a>
+    </p>
+
+</div>
+
+<!-- Script de integración con LoginServlet.java -->
+<script>
+    const formLogin = document.getElementById('formLogin');
+    const mensajeError = document.getElementById('mensaje-error');
+
+    formLogin.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Evita la recarga de página
+
+        // Capturar datos de las cajas de texto
+        const correo = document.getElementById('correo').value;
+        const password = document.getElementById('password').value;
+
+        // Empaquetar datos para el LoginServlet
+        const datos = new URLSearchParams();
+        datos.append('email', correo);
+        datos.append('password', password);
+
+        try {
+            // Enviar petición POST al backend Java
+            const respuesta = await fetch('/bonuapp/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: datos
+            });
+
+            const resultado = await respuesta.json();
+
+            // Evaluar respuesta del Servlet
+            if (respuesta.ok) {
+                mensajeError.style.color = "green";
+                mensajeError.textContent = "✅ " + resultado.mensaje;
+
+                // Redirigir al inicio/dashboard tras 1.5 segundos
+                setTimeout(() => {
+                    window.location.href = "bono.html"; // Cambia esta ruta según la vista principal de BonuApp
+                }, 1500);
+            } else {
+                mensajeError.style.color = "red";
+                mensajeError.textContent = "❌ " + resultado.mensaje;
+            }
+        } catch (error) {
+            console.error("Error al conectar con la API:", error);
+            mensajeError.style.color = "red";
+            mensajeError.textContent = "⚠️ Error de conexión con el servidor backend.";
+        }
+    });
+</script>
+</body>
+</html>
+

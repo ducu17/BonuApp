@@ -1,24 +1,22 @@
-package com.bonuapp.dao; // <-- Asegúrate de que esta línea esté arriba del todo
+package com.bonuapp.dao;
 
-import com.bonuapp.model.Usuario;       // <-- IMPORTANTE: Para que reconozca la clase Usuario
-import com.bonuapp.util.DatabaseConnection; // <-- IMPORTANTE: Para que reconozca DatabaseConnection
+import com.bonuapp.model.Usuario;
+import com.bonuapp.util.DatabaseConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDAO {
 
-    // 1. INSERTAR (Actualizado con getConnection)
+    // 1. INSERTAR
     public boolean insertarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, correo, contrasena, saldo_puntos, rol) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection(); // <-- CAMBIADO A getConnection()
+        String sql = "INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, usuario.getNombre());
             stmt.setString(2, usuario.getCorreo());
             stmt.setString(3, usuario.getContrasena());
-            stmt.setInt(4, usuario.getSaldoPuntos());
-            stmt.setString(5, usuario.getRol());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -27,22 +25,20 @@ public class UsuarioDAO {
         }
     }
 
-    // 2. CONSULTAR / LISTAR (Actualizado con getConnection)
+    // 2. LISTAR
     public List<Usuario> listarUsuarios() {
         List<Usuario> lista = new ArrayList<>();
         String sql = "SELECT * FROM usuarios";
-        try (Connection conn = DatabaseConnection.getConnection(); // <-- CAMBIADO A getConnection()
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Usuario u = new Usuario();
-                u.setIdUsuario(rs.getInt("id_usuario"));
+                u.setIdUsuario(rs.getInt("id"));
                 u.setNombre(rs.getString("nombre"));
-                u.setCorreo(rs.getString("correo"));
-                u.setContrasena(rs.getString("contrasena"));
-                u.setSaldoPuntos(rs.getInt("saldo_puntos"));
-                u.setRol(rs.getString("rol"));
+                u.setCorreo(rs.getString("email"));
+                u.setContrasena(rs.getString("password"));
                 u.setFechaRegistro(rs.getTimestamp("fecha_registro"));
                 lista.add(u);
             }
@@ -52,36 +48,30 @@ public class UsuarioDAO {
         return lista;
     }
 
-    // 3. ACTUALIZAR (Actualizado con getConnection)
-    public boolean actualizarUsuario(Usuario usuario) {
-        String sql = "UPDATE usuarios SET nombre = ?, correo = ?, saldo_puntos = ?, rol = ? WHERE id_usuario = ?";
-        try (Connection conn = DatabaseConnection.getConnection(); // <-- CAMBIADO A getConnection()
+    // 3. OBTENER POR CORREO Y CONTRASEÑA (LOGIN)
+    public Usuario obtenerPorCorreoYContrasena(String correo, String contrasena) {
+        Usuario usuario = null;
+        String sql = "SELECT * FROM usuarios WHERE email = ? AND password = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, usuario.getNombre());
-            stmt.setString(2, usuario.getCorreo());
-            stmt.setInt(3, usuario.getSaldoPuntos());
-            stmt.setString(4, usuario.getRol());
-            stmt.setInt(5, usuario.getIdUsuario());
+            stmt.setString(1, correo);
+            stmt.setString(2, contrasena);
 
-            return stmt.executeUpdate() > 0;
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    usuario = new Usuario();
+                    usuario.setIdUsuario(rs.getInt("id"));
+                    usuario.setNombre(rs.getString("nombre"));
+                    usuario.setCorreo(rs.getString("email"));
+                    usuario.setContrasena(rs.getString("password"));
+                    usuario.setFechaRegistro(rs.getTimestamp("fecha_registro"));
+                }
+            }
         } catch (SQLException e) {
-            System.err.println("Error al actualizar usuario: " + e.getMessage());
-            return false;
+            System.err.println("Error al autenticar usuario: " + e.getMessage());
         }
-    }
-
-    // 4. ELIMINAR (Actualizado con getConnection)
-    public boolean eliminarUsuario(int idUsuario) {
-        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
-        try (Connection conn = DatabaseConnection.getConnection(); // <-- CAMBIADO A getConnection()
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, idUsuario);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            System.err.println("Error al eliminar usuario: " + e.getMessage());
-            return false;
-        }
+        return usuario;
     }
 }

@@ -1,0 +1,19 @@
+### Prueba 2: Login
+POST http://localhost:8080/BonuApp/api/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "tortoladummy@gmail.com",
+  "password": "Brayan1709"
+}
+
+###
+
+### Prueba 2: Login
+POST http://localhost:8080/BonuApp/api/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "tortoladummy@gmail.com",
+  "password": "Brayan1709"
+}
