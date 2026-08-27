@@ -1,4 +1,16 @@
-### Prueba 2: Login
+### 1. Prueba de Registro de Usuario
+POST http://localhost:8080/BonuApp/api/usuarios/registro
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "email": "juanperez@gmail.com",
+  "password": "Password123"
+}
+
+###
+
+### 2. Prueba de Inicio de Sesión Exitoso (Credenciales correctas)
 POST http://localhost:8080/BonuApp/api/usuarios/login
 Content-Type: application/json
 
@@ -9,11 +21,11 @@ Content-Type: application/json
 
 ###
 
-### Prueba 2: Login
+### 3. Prueba de Inicio de Sesión Fallido (Credenciales incorrectas)
 POST http://localhost:8080/BonuApp/api/usuarios/login
 Content-Type: application/json
 
 {
   "email": "tortoladummy@gmail.com",
-  "password": "Brayan1709"
+  "password": "clave_incorrecta"
 }
