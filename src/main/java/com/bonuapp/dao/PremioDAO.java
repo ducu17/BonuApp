@@ -8,6 +8,25 @@ import java.util.List;
 
 public class PremioDAO {
 
+    public List<Premio> listarTodos() {
+        List<Premio> lista = new ArrayList<>();
+        String sql = "SELECT * FROM premios"; // Ajusta el nombre de tu tabla si es diferente
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Premio p = new Premio();
+                p.setId(rs.getInt("id")); // Ajusta según el nombre de tus columnas en MySQL
+                p.setNombre(rs.getString("nombre_premio"));
+                p.setPuntos(rs.getInt("costo_puntos"));
+                lista.add(p);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al listar premios: " + e.getMessage());
+        }
+        return lista;
+    }
+
     // 1. INSERTAR (Crear) - Adaptado a tabla 'premios'
     public boolean insertarPremio(Premio premio) {
         String sql = "INSERT INTO premios (nombre_premio, descripcion, costo_puntos, stock, estado) VALUES (?, ?, ?, ?, ?)";
