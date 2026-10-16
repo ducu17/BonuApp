@@ -16,9 +16,9 @@ public class PremioDAO {
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 Premio p = new Premio();
-                p.setId(rs.getInt("id")); // Ajusta según el nombre de tus columnas en MySQL
+                p.setIdPremio(rs.getInt("id"));             // Cambió a setIdPremio[span_1](start_span)[span_1](end_span)
                 p.setNombre(rs.getString("nombre_premio"));
-                p.setPuntos(rs.getInt("costo_puntos"));
+                p.setPuntosRequeridos(rs.getInt("costo_puntos")); // Cambió a setPuntosRequeridos[span_2](start_span)[span_2](end_span)
                 lista.add(p);
             }
         } catch (SQLException e) {

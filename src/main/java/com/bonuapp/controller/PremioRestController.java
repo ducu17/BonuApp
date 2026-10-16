@@ -25,9 +25,9 @@ public class PremioRestController extends HttpServlet {
             for (int i = 0; i < lista.size(); i++) {
                 Premio p = lista.get(i);
                 json.append("{");
-                json.append("\"id\":").append(p.getId()).append(",");
+                json.append("\"id\":").append(p.getIdPremio()).append(","); // <--- Actualizado
                 json.append("\"nombre\":\"").append(p.getNombre()).append("\",");
-                json.append("\"puntos\":").append(p.getPuntos());
+                json.append("\"puntos\":").append(p.getPuntosRequeridos()); // <--- Actualizado
                 json.append("}");
                 if (i < lista.size() - 1) {
                     json.append(",");

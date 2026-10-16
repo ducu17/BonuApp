@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: API BonuApp - Servicios Web de Premios y Autenticación
+  description: Documentación oficial de los endpoints RESTful desarrollados para BonuApp (Evidencia SENA GA7-220501096-AA5-EV03).
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/BonuApp
+    description: Servidor Local de Desarrollo (Apache Tomcat 10)
+
+paths:
+  /api/premios:
+    get:
+      summary: Listar todos los premios y bonificaciones disponibles
+      tags:
+        - Premios
+      responses:
+        '200':
+          description: Arreglo JSON con la lista de premios obtenida exitosamente desde la base de datos MySQL
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    nombre:
+                      type: nombre_premio
+                      example: Bono de bienvenida
+                    puntos:
+                      type: integer
+                      example: 500
+
+  /api/usuarios/login:
+    post:
+      summary: Autenticación de usuarios en el sistema BonuApp
+      tags:
+        - Autenticación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: usuario@bonuapp.com
+                password:
+                  type: string
+                  example: 123456
+      responses:
+        '200':
+          description: Inicio de sesión exitoso
+        '401':
+          description: Credenciales incorrectas o usuario no registrado
