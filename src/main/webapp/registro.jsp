@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="contenedor-registro">
+    <img src="${pageContext.request.contextPath}/img/logoBonuApp.webp" alt="Logo BonuApp">
     <h2>Crear Cuenta en BonuApp</h2>
 
     <!-- El formulario apunta a la URL del Servlet usando POST -->
