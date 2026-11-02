@@ -36,10 +36,10 @@ public class UsuarioServlet extends HttpServlet {
         }
         String jsonBuffer = sb.toString();
 
-        // Extraer valores del JSON
-        String nombre = extraerValorJson(jsonBuffer, "nombre");
-        String email = extraerValorJson(jsonBuffer, "email");
-        String password = extraerValorJson(jsonBuffer, "password");
+        // Capturar los parámetros enviados desde el formulario tradicional de JSP
+        String nombre = request.getParameter("nombre");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
         // Crear objeto Usuario
         Usuario nuevoUsuario = new Usuario();

@@ -31,7 +31,7 @@
         <button type="submit" class="btn-registrar">Registrarme</button>
     </form>
 
-    <!-- Si el Servlet nos devuelve un mensaje de error o éxito, lo mostramos aquí -->
+    <!-- Si el Serv{"path":"/tauri/C/Projects Developers/BonuApp/src/main/webapp/registro.jsp"}let nos devuelve un mensaje de error o éxito, lo mostramos aquí -->
     <% if (request.getAttribute("mensaje") != null) { %>
     <div class="mensaje-alerta">
         <p><%= request.getAttribute("mensaje") %></p>
