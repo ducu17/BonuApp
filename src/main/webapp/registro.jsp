@@ -3,25 +3,32 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BonuApp - Registro de Usuario</title>
-    <!-- Vinculamos tu hoja de estilos en la carpeta css -->
-    <link rel="stylesheet" href="css/estilos.css">
+    <!-- Vinculamos tu hoja de estilos unificada -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css">
 </head>
 <body>
-<div class="contenedor-registro">
-    <img src="${pageContext.request.contextPath}/img/logoBonuApp.webp" alt="Logo BonuApp">
+
+<!-- Contenedor principal que arma la tarjeta blanca centrada -->
+<div class="container">
+
+    <img src="${pageContext.request.contextPath}/img/logoBonuApp.webp" class="logo" alt="Logo BonuApp">
+
+    <!-- Título -->
     <h2>Crear Cuenta en BonuApp</h2>
 
-    <!-- El formulario apunta a la URL del Servlet usando POST -->
+    <!-- Formulario -->
     <form action="UsuarioServlet" method="POST">
+
         <div class="campo">
             <label for="nombre">Nombre Completo:</label>
-            <input type="text" id="nombre" name="nombre" required placeholder="Ej. Donaldo">
+            <input type="text" id="nombre" name="nombre" required placeholder="Ej. Tu Nombre">
         </div>
 
         <div class="campo">
             <label for="email">Correo Electrónico:</label>
-            <input type="email" id="email" name="email" required placeholder="correo@sena.edu.co">
+            <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com">
         </div>
 
         <div class="campo">
@@ -29,15 +36,12 @@
             <input type="password" id="password" name="password" required placeholder="Mínimo 6 caracteres">
         </div>
 
-        <button type="submit" class="btn-registrar">Registrarme</button>
+        <!-- Botón de envío -->
+        <button type="submit" class="btn-primary">Registrarse</button>
+
     </form>
 
-    <!-- Si el Serv{"path":"/tauri/C/Projects Developers/BonuApp/src/main/webapp/registro.jsp"}let nos devuelve un mensaje de error o éxito, lo mostramos aquí -->
-    <% if (request.getAttribute("mensaje") != null) { %>
-    <div class="mensaje-alerta">
-        <p><%= request.getAttribute("mensaje") %></p>
-    </div>
-    <% } %>
 </div>
+
 </body>
 </html>

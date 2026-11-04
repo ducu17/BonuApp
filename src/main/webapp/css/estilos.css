@@ -1,86 +1,147 @@
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #1976D2, #42A5F5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+:root {
+    --blue: #003366;
+    --orange: #FFA500;
+    --white: #ffffff;
+    --gray: #F2F4F7;
+    --text: #1f2933;
+    --radius: 12px;
+    --maxw: 420px;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
 }
 
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 300px;
+body {
+    background: linear-gradient(135deg, #1976D2, #42A5F5);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+/* Clases contenedoras unificadas para adaptabilidad móvil */
+.page, .container, .contenedor-registro, .card {
+    width: 100%;
+    max-width: var(--maxw);
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.logo, img {
+    width: 80px;       /* Agrega esta línea para limitar el ancho exacto */
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 16px auto;
+}
+
+.title, h1, h2 {
+    margin: 0 0 6px 0;
+    color: var(--blue);
+    font-size: 22px;
+    font-weight: 700;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.logo {
-    width: 150px;
+.subtitle {
+    margin: 0 0 18px 0;
+    color: #4b5563;
+    font-size: 14px;
+    text-align: center; /* <-- Asegúrate de que tenga esta línea */
+}
+
+.label, .campo label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Estructura vertical flexible para los campos */
+/* Estructura vertical flexible para los campos */
+.form-group, .campo {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* <-- Agrégalo aquí para alinear todo a la izquierda */
 }
 
-input {
+.input, .campo input, input[type="text"], input[type="email"], input[type="password"] {
     width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    padding: 12px 14px;
+    border: 1px solid #dcdfe6;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
-button {
+.input:focus, input:focus {
+    border-color: var(--blue);
+    outline: 3px solid rgba(0, 51, 102, 0.12);
+}
+
+.btn-primary, button, input[type="submit"] {
+    margin-top: 18px;
     width: 100%;
-    padding: 10px;
-    background: #1976D2;
-    color: white;
+    padding: 12px;
+    background: var(--orange);
+    color: var(--white);
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
-    font-weight: bold;
+    transition: transform .12s ease, background-color .12s ease;
 }
 
-button:hover {
-    background: #125aa0;
+.btn-primary:focus, button:focus {
+    outline: 3px solid rgba(255, 165, 0, 0.25);
 }
 
-.registro-texto {
-    text-align: center;
-    margin-top: 15px;
+.btn-primary:hover, button:hover {
+    transform: translateY(-2px);
+    background-color: #e09600;
 }
 
-.link-registro {
-    color: #1976D2;
-    font-weight: bold;
+.links {
+    margin-top: 14px;
+    text-align: right;
+}
+
+.link {
+    color: var(--blue);
+    font-size: 13px;
     text-decoration: none;
 }
 
-.link-registro:hover {
+.link:hover {
     text-decoration: underline;
 }
-/* --- Nuevos estilos para el formulario optimizado --- */
-.form-footer {
-    text-align: center;
-    margin-top: 15px;
-}
 
-.login-link {
-    color: #1976D2;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-/* Oculta las etiquetas label para mantener tu diseño limpio */
-.form-group label {
-    display: none;
-}
-/* Estilo para el mensaje de error de contraseñas */
-.error-texto {
-    color: #D32F2F; /* Rojo de advertencia */
+.msg, .error-texto {
+    margin-top: 14px;
     font-size: 14px;
     text-align: center;
-    margin-top: -5px;
-    margin-bottom: 10px;
-    font-weight: bold;
+}
+.msg.error, .error-texto { color: #b91c1c; }
+.msg.success { color: #065f46; }
+
+/* Responsive para tablets y laptops */
+@media (min-width: 720px) {
+    body { padding: 40px; }
+    .card, .container, .contenedor-registro { padding: 36px; }
 }
