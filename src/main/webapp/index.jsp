@@ -64,8 +64,14 @@
       return;
     }
     // demo success
-    msg.textContent = '¡Acceso correcto! (demo)';
+// demo success o respuesta exitosa del servidor
+    msg.textContent = '¡Acceso correcto!';
     msg.className = 'msg success';
+
+// Redirección automática a la pantalla de bonos de BonuApp
+    setTimeout(() => {
+      window.location.href = "bono.html";
+    }, 1000);
   });
 </script>
 </body>

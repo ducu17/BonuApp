@@ -48,11 +48,8 @@ public class LoginServlet extends HttpServlet {
         boolean autenticado = (usuario != null);
         // Responde según el resultado de la validación
         if (autenticado) {
-            // Redirige directamente a la pantalla de bonos
-            response.sendRedirect("bono.html");
-        } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            out.print("{\"error\": \"Error en la autenticación.\"}");
+            response.setStatus(HttpServletResponse.SC_OK);
+            out.print("{\"mensaje\": \"Autenticacion satisfactoria\"}");
         }
 
         out.flush();
