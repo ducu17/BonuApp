@@ -38,8 +38,7 @@
 
         <!-- Botón de envío -->
         <button type="submit" class="btn-primary">Registrarse</button>
-        <!-- Botón de envío -->
-        <button type="submit" class="btn-primary">Registrarse</button>
+
 
         <p class="login-link" style="text-align: center; margin-top: 15px;">
             ¿Ya tienes cuenta? <a href="index.jsp">Inicia sesión aquí</a>
