@@ -41,6 +41,7 @@
 
       <div class="links">
         <a href="#" class="link">¿Olvidaste tu contraseña?</a>
+        <a href="registro.jsp" class="link">¿No tienes cuenta? Regístrate</a>
       </div>
 
       <div id="msg" class="msg" aria-live="polite"></div>

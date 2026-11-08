@@ -48,11 +48,11 @@ public class LoginServlet extends HttpServlet {
         boolean autenticado = (usuario != null);
         // Responde según el resultado de la validación
         if (autenticado) {
-            response.setStatus(HttpServletResponse.SC_OK); // 200 OK
-            out.print("{\"mensaje\": \"Autenticación satisfactoria\"}");
+            // Redirige directamente a la pantalla de bonos
+            response.sendRedirect("bono.html");
         } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
-            out.print("{\"error\": \"Error en la autenticación. Credenciales inválidas.\"}");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            out.print("{\"error\": \"Error en la autenticación.\"}");
         }
 
         out.flush();
