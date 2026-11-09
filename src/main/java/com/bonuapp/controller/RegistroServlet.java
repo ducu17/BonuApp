@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -23,10 +25,12 @@ public class RegistroServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        // Recepción de parámetros desde el cliente
-        String nombre = request.getParameter("nombre");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        // Leer y parsear el JSON recibido usando Gson
+        com.google.gson.JsonObject jsonObj = com.google.gson.JsonParser.parseReader(request.getReader()).getAsJsonObject();
+
+        String nombre = jsonObj.has("nombre") ? jsonObj.get("nombre").getAsString() : "";
+        String email = jsonObj.has("email") ? jsonObj.get("email").getAsString() : "";
+        String password = jsonObj.has("password") ? jsonObj.get("password").getAsString() : "";
 
         // Validación de campos obligatorios
         if (nombre == null || email == null || password == null ||
@@ -50,6 +54,18 @@ public class RegistroServlet extends HttpServlet {
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.print("{\"status\": \"error\", \"mensaje\": \"Error al registrar usuario\"}");
+        }
+    }// Método auxiliar para extraer valores de un JSON plano
+    private String extraerValorJson(String json, String propiedad) {
+        try {
+            String searchKey = "\"" + propiedad + "\":\"";
+            int start = json.indexOf(searchKey);
+            if (start == -1) return "";
+            start += searchKey.length();
+            int end = json.indexOf("\"", start);
+            return json.substring(start, end);
+        } catch (Exception e) {
+            return "";
         }
     }
 }
