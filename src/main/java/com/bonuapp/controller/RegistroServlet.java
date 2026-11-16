@@ -31,10 +31,11 @@ public class RegistroServlet extends HttpServlet {
         String nombre = jsonObj.has("nombre") ? jsonObj.get("nombre").getAsString() : "";
         String email = jsonObj.has("email") ? jsonObj.get("email").getAsString() : "";
         String password = jsonObj.has("password") ? jsonObj.get("password").getAsString() : "";
+        String usuario = jsonObj.has("usuario") ? jsonObj.get("usuario").getAsString() : "";
 
         // Validación de campos obligatorios
-        if (nombre == null || email == null || password == null ||
-                nombre.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (nombre == null || email == null | usuario == null || password == null ||
+                nombre.isEmpty() || email.isEmpty() || usuario.isEmpty() || password.isEmpty()) {
 
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             out.print("{\"status\": \"error\", \"mensaje\": \"Campos obligatorios vacíos\"}");
@@ -43,6 +44,7 @@ public class RegistroServlet extends HttpServlet {
 
         // Creación del objeto modelo Usuario usando su constructor
         Usuario nuevoUsuario = new Usuario(nombre, email, password, 0, "cliente");
+        nuevoUsuario.setUsuario(usuario);
 
         // Intento de inserción en la base de datos
         boolean registrado = usuarioDAO.insertarUsuario(nuevoUsuario);

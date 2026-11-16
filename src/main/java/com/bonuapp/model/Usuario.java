@@ -8,6 +8,7 @@ public class Usuario {
     private String correo;
     private String contrasena;
     private int saldoPuntos;
+    private String usuario; // <-- NUEVO campo
     private String rol;             // <-- NUEVO campo
     private Timestamp fechaRegistro; // <-- NUEVO campo
 
@@ -44,4 +45,12 @@ public class Usuario {
 
     public Timestamp getFechaRegistro() { return fechaRegistro; }
     public void setFechaRegistro(Timestamp fechaRegistro) { this.fechaRegistro = fechaRegistro; }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
 }

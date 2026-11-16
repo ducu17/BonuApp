@@ -10,13 +10,14 @@ public class UsuarioDAO {
 
     // 1. INSERTAR
     public boolean insertarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nombre, email, usuario, password) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, usuario.getNombre());
             stmt.setString(2, usuario.getCorreo());
-            stmt.setString(3, usuario.getContrasena());
+            stmt.setString(3, usuario.getUsuario());
+            stmt.setString(4, usuario.getContrasena());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -38,8 +39,9 @@ public class UsuarioDAO {
                 u.setIdUsuario(rs.getInt("id"));
                 u.setNombre(rs.getString("nombre"));
                 u.setCorreo(rs.getString("email"));
+                u.setUsuario(rs.getString("usuario")); // <-- Agrega esta línea para recuperar el usuario
                 u.setContrasena(rs.getString("password"));
-                u.setFechaRegistro(rs.getTimestamp("fecha_registro"));
+                u.setFechaRegistro(rs.getTimestamp("fechaRegistro")); // Ajusta según el nombre exacto de la columna en tu BD
                 lista.add(u);
             }
         } catch (SQLException e) {
