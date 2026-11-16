@@ -19,8 +19,7 @@
     <h2>Crear Cuenta en BonuApp</h2>
 
     <!-- Formulario -->
-    <form action="UsuarioServlet" method="POST">
-
+    <form id="registroForm">
         <div class="campo">
             <label for="nombre">Nombre Completo:</label>
             <input type="text" id="nombre" name="nombre" required placeholder="Ej. Tu Nombre">
@@ -31,23 +30,64 @@
             <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com">
         </div>
 
+        <!-- Asegúrate de incluir el campo usuario que exige la base de datos -->
+        <div class="campo">
+            <label for="usuario">Nombre de Usuario:</label>
+            <input type="text" id="usuario" name="usuario" required placeholder="Ej. ducu17">
+        </div>
+
         <div class="campo">
             <label for="password">Contraseña:</label>
             <input type="password" id="password" name="password" required placeholder="Mínimo 6 caracteres">
         </div>
 
-        <!-- Botón de envío -->
-        <button type="submit" class="btn-primary">Registrarse</button>
+        <button type="submit" class="btn">Registrarse</button>
+    </form> <!-- Aquí cierra correctamente el formulario -->
 
+    <p class="login-link">
+        ¿Ya tienes cuenta? <a href="index.jsp">Inicia sesión aquí</a>
+    </p>
 
-        <p class="login-link" style="text-align: center; margin-top: 15px;">
-            ¿Ya tienes cuenta? <a href="index.jsp">Inicia sesión aquí</a>
-        </p>
-    </form>
+</div> <!-- Cierra el <div class="container"> -->
 
-    </form>
+<!-- ========================================== -->
+<!-- SCRIPT DE ENVÍO ASÍNCRONO CON FETCH (JSON) -->
+<!-- ========================================== -->
+<script>
+    document.getElementById('registroForm').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Evita el envío tradicional
 
-</div>
+        const datosUsuario = {
+            nombre: document.getElementById('nombre').value,
+            email: document.getElementById('email').value,
+            usuario: document.getElementById('usuario').value,
+            password: document.getElementById('password').value
+        };
+
+        try {
+            const response = await fetch('${pageContext.request.contextPath}/api/registro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datosUsuario)
+            });
+
+            const resultado = await response.json();
+
+            if (response.ok && resultado.status === 'exito') {
+                alert('¡Usuario registrado correctamente!');
+                document.getElementById('registroForm').reset();
+            } else {
+                alert('Error al registrar: ' + (resultado.mensaje || 'Intenta de nuevo'));
+            }
+        } catch (error) {
+            console.error('Error de red:', error);
+            alert('No se pudo conectar con el servidor.');
+        }
+    });
+</script>
 
 </body>
 </html>
+
