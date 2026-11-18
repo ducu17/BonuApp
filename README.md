@@ -1,6 +1,6 @@
 # BonuApp — Plataforma Web de Fidelización y Bonos Virtuales
 
-Aplicación web full-stack responsiva desarrollada como proyecto productivo para el programa **Análisis y Desarrollo de Software (ADSO)** del **SENA**. **BonuApp** permite a los usuarios acumular y gestionar bonos virtuales por realizar búsquedas y compras en comercios aliados, impulsando la fidelización digital.
+Aplicación web full-stack desarrollada como proyecto productivo para el programa **Análisis y Desarrollo de Software (ADSO)** del **SENA**. **BonuApp** permite a los usuarios gestionar cuentas, acumular y consultar bonos virtuales mediante comercios aliados.
 
 ---
 
@@ -10,29 +10,27 @@ Aplicación web full-stack responsiva desarrollada como proyecto productivo para
 3. [Estructura del Proyecto](#estructura-del-proyecto)
 4. [Requisitos Previos](#requisitos-previos)
 5. [Instalación y Configuración Local](#instalación-y-configuración-local)
-6. [Endpoints Principales (API REST)](#endpoints-principales-api-rest)
-7. [Pruebas de Software](#pruebas-de-software)
-8. [Autor](#autor)
+6. [Controladores (Servlets y API)](#controladores-servlets-y-api)
+7. [Autor](#autor)
 
 ---
 
 ## Características Principales
-* **Gestión de Usuarios (CRUD):** Registro de nuevos clientes, inicio de sesión con validación de credenciales, actualización de perfil y eliminación de cuenta.
-* **Sistema de Acumulación de Bonos:** Asignación automática de bonos virtuales tras registrar búsquedas o compras en comercios aliados.
-* **Consulta de Saldo e Historial:** Visualización en tiempo real de bonos disponibles, comercios participantes y movimientos realizados.
-* **Diseño Responsivo (Mobile-First):** Interfaz adaptable a computadores de escritorio y dispositivos móviles.
+* **Gestión de Usuarios (CRUD):** Registro, autenticación (`LoginServlet`), actualización y control de perfiles de usuario.
+* **Sistema de Premios y Bonos:** Consulta y gestión de bonos y puntos a través de `PremioRestController` y `PremioDAO`.
+* **Diseño e Interfaz Web:** Vistas dinámicas en JSP (`login.jsp`, `registro.jsp`, `index.jsp`, `bono.jsp`) respaldadas por componentes CSS y recursos multimedia organizados.
 
 ---
 
 ## Arquitectura y Tecnologías
 
-| Capa | Tecnología | Descripción |
+| Capa | Tecnología / Herramienta | Descripción |
 | :--- | :--- | :--- |
-| **Frontend** | HTML5, CSS3, JavaScript, JSP | Vistas dinámicas, formularios validados y consumo asíncrono de servicios. |
-| **Backend** | Java (Jakarta/Java EE Servlets) | Controladores, lógica de negocio, patrón DAO y gestión de sesiones. |
-| **Servidor Web** | Apache Tomcat | Contenedor de Servlets y servidor de aplicaciones local. |
-| **Base de Datos** | MySQL (phpMyAdmin / Workbench) | Persistencia relacional de usuarios, comercios aliados y bonos. |
-| **Herramientas** | IntelliJ IDEA, Postman, GitHub Desktop | Desarrollo, pruebas de endpoints REST y control de versiones. |
+| **Frontend** | JSP, HTML5, CSS3, JavaScript | Vistas de usuario y formularios responsivos. |
+| **Backend** | Java Servlets, JDBC | Controladores de peticiones y lógica de negocio. |
+| **Servidor Web** | Apache Tomcat | Contenedor de servlets para entorno local (`localhost`). |
+| **Base de Datos** | MySQL | Persistencia relacional (`bonuapp.sql`). |
+| **Entorno y Control** | IntelliJ IDEA, GitHub Desktop | IDE de desarrollo y control de versiones. |
 
 ---
 
@@ -41,18 +39,27 @@ Aplicación web full-stack responsiva desarrollada como proyecto productivo para
 ```text
 BonuApp/
 ├── database/
-│   └── bonuapp_db.sql           # Script SQL con estructura de tablas y datos de prueba
+│   └── bonuapp.sql              # Script SQL con estructura de tablas
+├── docs/
+│   ├── MANUALES BONUAPP.docx    # Documentación técnica y de usuario
+│   └── swagger.yaml             # Especificación de la API
 ├── src/
 │   └── main/
 │       ├── java/
 │       │   └── com/bonuapp/
-│       │       ├── config/      # Clase de conexión JDBC a MySQL
-│       │       ├── controller/  # Java Servlets (Auth, Usuarios, Bonos, Comercios)
-│       │       ├── dao/         # Operaciones CRUD contra la base de datos
-│       │       └── model/       # Entidades (Usuario, Bono, Comercio, Transaccion)
+│       │       ├── config/      # Filtros de configuración (CORSFilter)
+│       │       ├── controller/  # Servlets (LoginServlet, RegistroServlet, UsuarioServlet, PremioRestController)
+│       │       ├── dao/         # Objetos de Acceso a Datos (UsuarioDAO, PremioDAO)
+│       │       ├── model/       # Clases de entidad (Usuario, Premio)
+│       │       └── util/        # Conexión a Base de Datos (DatabaseConnection)
 │       └── webapp/
-│           ├── css/             # Hojas de estilo responsivas
-│           ├── js/              # Validaciones y peticiones Fetch/AJAX
-│           ├── WEB-INF/         # Configuración web.xml
-│           └── index.jsp        # Página principal de la aplicación
+│           ├── components/      # Componentes UI (CSS / JSX)
+│           ├── css/             # Hojas de estilo (estilos.css)
+│           ├── img/             # Logos y recursos gráficos (logos de marcas, etc.)
+│           ├── WEB-INF/         # Configuración web.xml y librerías JAR (.jar)
+│           ├── index.jsp        # Página principal
+│           ├── login.jsp        # Vista de inicio de sesión
+│           ├── registro.jsp     # Vista de registro de usuarios
+│           └── bono.jsp         # Vista de gestión de bonos
+├── pruebas.http                 # Pruebas de endpoints HTTP
 └── README.md

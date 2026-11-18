@@ -15,7 +15,7 @@
     <h2>Generar Bono</h2>
 
     <!-- Formulario con ID para el script -->
-    <form id="formBono">
+    <form id="formBono" action="BonoServlet" method="POST">
         <div class="campo" style="text-align: left; margin-bottom: 15px;">
             <label for="selectTienda">Selecciona la tienda:</label>
             <select id="selectTienda" name="tienda" required style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #ccc;">
