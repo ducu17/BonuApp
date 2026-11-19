@@ -44,8 +44,21 @@
     <p style="margin-top: 20px;">
         <a href="index.jsp" style="color: #007bff; text-decoration: none;">Volver al Inicio</a>
     </p>
+    <button type="button" class="btn" onclick="abrirModalBono('BN-01')">Ver bono</button>
 </div>
+<section id="gridBonos" class="grid-cards"></section>[cite: 1]
 
+<div id="modalBono" class="modal-overlay">[cite: 1]
+    <div class="modal-content">[cite: 1]
+        <h2 id="modalBonoTitulo"></h2>[cite: 1]
+        <p id="modalBonoTienda"></p>[cite: 1]
+        <div class="codigo-box" id="modalBonoCodigo"></div>[cite: 1]
+        <p id="modalBonoVigencia"></p>[cite: 1]
+        <p id="modalBonoCondiciones"></p>[cite: 1]
+        <p id="modalEstadoCanje"></p>[cite: 1]
+        <button type="button" class="btn-primary" onclick="cerrarModalBono()">Cerrar</button>[cite: 1]
+    </div>
+</div>
 <!-- Script de comunicación asíncrona con el Servlet -->
 <script>
     document.getElementById('formBono').addEventListener('submit', async function(e) {
@@ -79,6 +92,7 @@
         }
     });
 </script>
+<script src="js/bonuses.js"></script>
 
 </body>
 </html>
