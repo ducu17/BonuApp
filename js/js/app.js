@@ -19,7 +19,7 @@ function registrarUsuario() {
     localStorage.setItem("usuarioBonuApp", JSON.stringify(usuario));
 
     alert("Usuario registrado correctamente");
-    window.location.href = "login.html";
+    window.location.href = "login.jsp";
 }
 function iniciarSesion() {
     let email = document.getElementById("email").value;
@@ -34,7 +34,7 @@ function iniciarSesion() {
 
     if (email === usuarioGuardado.email && password === usuarioGuardado.password) {
         alert("Bienvenido a BonuApp");
-        window.location.href = "dashboard.html";
+        window.location.href = "dashboard.jsp";
     } else {
         alert("Correo o contraseña incorrectos");
     }

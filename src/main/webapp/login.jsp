@@ -72,7 +72,7 @@
 
                 // Redirigir al inicio/dashboard tras 1.5 segundos
                 setTimeout(() => {
-                    window.location.href = "bono.html"; // Cambia esta ruta según la vista principal de BonuApp
+                    window.location.href = "bono.jsp"; // Cambia esta ruta según la vista principal de BonuApp
                 }, 1500);
             } else {
                 mensajeError.style.color = "red";

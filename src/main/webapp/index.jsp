@@ -70,7 +70,7 @@
 
 // Redirección automática a la pantalla de bonos de BonuApp
     setTimeout(() => {
-      window.location.href = "bono.html";
+      window.location.href = "bono.jsp";
     }, 1000);
   });
 </script>
